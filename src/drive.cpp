@@ -46,8 +46,8 @@ namespace drive {
 
   void tank(void) {
     int deadband = 20;
-    int lj       = joystickGetAnalog(1, 3);
-    int rj       = joystickGetAnalog(1, 2);
+    int lj       = joystick::analog(3);
+    int rj       = joystick::analog(2);
     if (abs(lj) < deadband && abs(rj) < deadband) {
       pid::enable();
       return;
@@ -73,8 +73,8 @@ namespace drive {
     void drive(void) {
       prevX             = x;
       prevY             = y;
-      x                 = 0 - joystickGetAnalog(1, ACCEL_X);
-      y                 = 0 - joystickGetAnalog(1, ACCEL_Y);
+      x                 = 0 - joystick::analog(ACCEL_X);
+      y                 = 0 - joystick::analog(ACCEL_Y);
       int threshold     = 20;
       double multiplier = 1.1;
 
@@ -108,4 +108,25 @@ namespace drive {
     pid::wait(pid::default_precision, inches * inches * 8);
     pid::disable();
   }
+
+  void straightUntil(int heading, bool (*func)(int), float urgency,
+                     bool absolute, sensors::gyro_t* gyro, int tolerance) {
+    int iHeading      = absolute ? heading : heading + gyro->value();
+    pid::pos_t change = pid::get();
+    float changer;
+    while (func(gyro->value())) {
+      change  = pid::get();
+      changer = (abs(gyro->value() - iHeading) - tolerance) * urgency;
+      if (gyro->value() > iHeading + tolerance) {
+        change.left -= changer;
+        change.right += changer;
+      } else if (gyro->value() < iHeading - tolerance) {
+        change.left += changer;
+        change.right -= changer;
+      }
+      pid::request(change);
+      delay(50);
+    }
+  }
+
 } // namespace drive

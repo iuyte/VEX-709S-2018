@@ -14,7 +14,10 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#ifndef DRIVE_HPP
+#define DRIVE_HPP
+
+#include "joystick.hpp"
 #include "motors.hpp"
 #include "sensors.hpp"
 
@@ -70,4 +73,40 @@ namespace drive {
      * loop */
     void drive(void);
   } // namespace accel
+
+  namespace gyro {
+    /** A driving that can allow an arc, or keep the robot straight */
+    class drive {
+    public:
+      /** A reference to the gyro which will be used to get values from */
+      sensors::gyro_t* gyro;
+      /** The ideal heading of the robot (is absolute)*/
+      int heading;
+      /** The urgency/agressiveness of the arc */
+      float urgency;
+      /** Turn the arc off */
+      void off(void);
+      /** Use to initialize and run the task */
+      drive(int heading, float urgency = 15.f, bool absolute = false,
+            sensors::gyro_t* gyro = &sensors::gyro, unsigned int tolerance = 3);
+
+    private:
+      /** The task that runs, keeping the robot straight */
+      void task(void* none);
+      /** The initial  heading, as opposed to the ideal heading */
+      int iHeading;
+      /** TaskHandle for the gyro heading task */
+      TaskHandle handle;
+      /** The internal variable used for changing the pid values */
+      float changer;
+      /** Whether it is on or not */
+      bool on;
+      /** The tolerance for turning */
+      int tolerance;
+    }; // class drive
+
+  } // namespace gyro
+
 } // namespace drive
+
+#endif /* end of include guard: DRIVE_HPP */

@@ -1,4 +1,4 @@
-// debug.hpp: Header file for performing debugging tasks
+// joystick.cpp: Source file that makes joystick stuff easier
 // Copyright (C) 2017 Ethan Wells
 //
 // This program is free software: you can redistribute it and/or modify
@@ -14,28 +14,14 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DEBUG_HPP
-#define DEBUG_HPP
+#include "../include/joystick.hpp"
 
-#include "pid.hpp"
-
-/** Contains debugging funtions, etc */
-namespace debug {
-  extern uint32_t fault;
-
-  template <class T>
-  static inline T unserialize(PROS_FILE* stream) {
-    alignas(alignof(T)) char buf[sizeof(T)];
-    size_t nread = fread((void*)buf, sizeof(T), 1, stream);
-    if (nread < sizeof(T)) {
-      return T();
-    }
-    T* out = (T*)buf;
-    return *out;
+namespace joystick {
+  int analog(Channel channel) {
+    return joystickGetAnalog(1, channel);
   }
 
-  /** Debug the Cortex if something goes wrong */
-  void debug(void);
-} // namespace debug
-
-#endif /* end of include guard: DEBUG_HPP */
+  bool digital(Group group, Button button) {
+    return joystickGetDigital(1, group, button);
+  }
+} // namespace joystick

@@ -43,18 +43,30 @@ namespace lift {
     right.set(power);
   }
 
+  void lock(void) {
+    set(lockN);
+  }
+
   void to(position pos, int int_pos, int tolerance) {
     if (int_pos == -1)
       int_pos = pos;
     do {
       set((int_pos > sensor->value() + tolerance ||
            int_pos < sensor->value() - tolerance)
-              ? (sensor->value() - int_pos) * 2
+              ? (sensor->value() - int_pos) * 1.5
               : (sensor->value() - int_pos));
       delay(15);
     } while (int_pos > sensor->value() + tolerance ||
              int_pos < sensor->value() - tolerance);
-    set(15);
-    return;
+    lock();
   }
-} // namespace drive
+
+  void control(void) {
+    int power = (joystick::digital(5, joystick::Up) * 127) +
+                (joystick::digital(5, joystick::Down) * 127);
+    power = (power == 0 && sensor->value() > threshold)
+                ? lockN
+                : ((sensor->value() < threshold) ? 0 : power);
+    set(power);
+  }
+} // namespace lift

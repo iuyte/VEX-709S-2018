@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#ifndef LIFT_HPP
+#define LIFT_HPP
+
 #include "drive.hpp"
 
 /** Contains everything relating to the drive */
@@ -43,15 +45,22 @@ namespace lift {
   } position;
 
   extern double inch;
-  /** The left side of the drive */
+  /** The left side of the lift */
   extern side_t left;
-  /** The right side of the drive */
+  /** The right side of the lift */
   extern side_t right;
   /** Sensor on the lift */
   extern sensors::pot_t* sensor;
+  /** The value where the lift will stay up with a standard load */
+  static const char lockN = 17;
+  /** Any value below this point will result in the lift being set to 0 */
+  static const int threshold = 150;
 
-  /** Set both sides of the drive at their requested powers */
-  void set(int lpower, int rpower);
+  /** Set the lift at their requested powers */
+  void set(int power);
+
+  /** Default value for the lift to be set at when it is no tin use */
+  void lock(void);
 
   /** Initialize the drive subsystem */
   void init(void);
@@ -59,4 +68,9 @@ namespace lift {
   /** p control for the lift */
   void to(position pos = bottom, int int_pos = -1, int tolerance = 50);
 
-} // namespace drive
+  /** Lift control that should be used in a while loop */
+  void control(void);
+
+} // namespace lift
+
+#endif /* end of include guard: LIFT_HPP */

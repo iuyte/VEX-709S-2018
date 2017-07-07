@@ -28,6 +28,26 @@ namespace pid {
   unsigned int default_precision = 30;
   TaskHandle pidHandle;
 
+  void pos_t::request() {
+    sensors::left.request  = left;
+    sensors::right.request = right;
+  }
+
+  pos_t::pos_t(long left, long right) : left(left), right(right) {
+  }
+
+  bool pos_t::operator=(pos_t pos) {
+    return left == pos.left && right == pos.right;
+  }
+
+  pos_t pos_t::operator+(pid::pos_t pos) {
+    return pos_t(left + pos.left, right + pos.right);
+  }
+
+  pos_t pos_t::operator-(pid::pos_t pos) {
+    return pos_t(left - pos.left, right - pos.right);
+  }
+
   void controller(void* none) {
     float current[2];
     float error[2];
@@ -83,13 +103,26 @@ namespace pid {
                            TASK_PRIORITY_DEFAULT);
   }
 
-  void stop(void) { taskSuspend(pidHandle); }
+  void stop(void) {
+    taskSuspend(pidHandle);
+  }
 
-  void go(void) { taskResume(pidHandle); }
+  void go(void) {
+    taskResume(pidHandle);
+  }
+
+  pos_t get(void) {
+    return pos_t(sensors::left.request, sensors::right.request);
+  }
 
   void request(long l, long r) {
     sensors::left.request  = l;
     sensors::right.request = r;
+  }
+
+  void request(pos_t pos) {
+    sensors::left.request  = pos.left;
+    sensors::right.request = pos.right;
   }
 
   void wait(unsigned long precision, unsigned long blockTime) {
@@ -111,7 +144,7 @@ namespace pid {
       }
     }
   }
-}
+} // namespace pid
 
 int sgn(float __x) {
   if (__x > 0)

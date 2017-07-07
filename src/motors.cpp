@@ -21,9 +21,13 @@ void motor_t::set(int _power) {
 }
 
 namespace motors {
-  void set(motor_t motor, int power) { motor.set(power); }
+  void set(motor_t motor, int power) {
+    motor.set(power);
+  }
 
-  int get(motor_t motor) { return motor.power; }
+  int get(motor_t motor) {
+    return motor.power;
+  }
 
   motor_t init(unsigned char port, int inverted, float slewRate, float scale) {
     motor_t motor;
@@ -39,7 +43,7 @@ namespace motors {
     motor_t list[11];
     TaskHandle handle;
 
-    void _slew(void* none) {
+    void slew(void* none) {
       unsigned long int current;
       while (true) {
         current = millis();
@@ -66,7 +70,7 @@ namespace motors {
         list[i]            = default_motor;
         default_motor.port = i;
       }
-      handle = taskCreate(&_slew, TASK_DEFAULT_STACK_SIZE, NULL,
+      handle = taskCreate(&slew, TASK_DEFAULT_STACK_SIZE, NULL,
                           TASK_PRIORITY_DEFAULT + 1);
     }
   } // namespace slew

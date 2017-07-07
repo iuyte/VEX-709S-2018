@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#ifndef SENSORS_HPP
+#define SENSORS_HPP
+
 #include "API.h"
 
 /** The namespace containing all information, functions, objects, relating to
@@ -43,12 +45,12 @@ namespace sensors {
     /** The initialization function for the encoder. Call in initialize() */
     void init(void);
     /** Constructs the encoder object. Make sure init is also called */
-    quad_t(unsigned char port1, unsigned char port2, bool _inverted);
+    quad_t(unsigned char port1, unsigned char port2, bool inverted);
   }; // struct quad_t
 
   /** Class for gyro objects */
   class gyro_t {
-   public:
+  public:
     /** The gyro struct used in funtions */
     Gyro gyro;
     /** The port the gyro is plugged into */
@@ -65,9 +67,9 @@ namespace sensors {
     /** Initialization funtion for the gyro, call in initialize() */
     void init(void);
     /** Class constructor, but it must not be forgotten to call init() */
-    gyro_t(unsigned char _port, unsigned int _calibration);
+    gyro_t(unsigned char port, unsigned int calibration);
 
-   private:
+  private:
     /** The calibration, a temporary placement between construction and
      * initialization */
     int calibration;
@@ -93,7 +95,7 @@ namespace sensors {
      * initialize() */
     void init(void);
     /** The class constructor for a potentiometer, also be sure to init() */
-    pot_t(unsigned char _port, bool _inverted);
+    pot_t(unsigned char port, bool inverted);
   }; // pot_t
 
   /** Class for ultrasonic sensors */
@@ -122,7 +124,7 @@ namespace sensors {
     /** Initializes the button. Call in initialize() */
     void init(void);
     /** Class constructor, but init() must also be called */
-    button_t(unsigned char _port, bool _inverted);
+    button_t(unsigned char port, bool inverted);
   }; // button_t
 
   /** Initializes the sensor subsystem, calls all the funtions that need to be
@@ -141,3 +143,5 @@ namespace sensors {
   /** gyro on the drive */
   extern gyro_t gyro;
 } // namespace sensors
+
+#endif /* end of include guard: SENSORS_HPP */

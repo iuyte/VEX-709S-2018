@@ -1,4 +1,4 @@
-// debug.hpp: Header file for performing debugging tasks
+// util.h: General utilities
 // Copyright (C) 2017 Ethan Wells
 //
 // This program is free software: you can redistribute it and/or modify
@@ -14,28 +14,12 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef DEBUG_HPP
-#define DEBUG_HPP
+#ifndef UTIL_H
+#define UTIL_H
 
-#include "pid.hpp"
+/** Clips iInput to a high of iHigh and a low of iLow - good for keeping a
+ * number to a maximum/minimum value */
+#define clipNum(iInput, iHigh, iLow) \
+  iInput <= iLow ? iLow : (iInput >= iHigh ? iHigh : iInput)
 
-/** Contains debugging funtions, etc */
-namespace debug {
-  extern uint32_t fault;
-
-  template <class T>
-  static inline T unserialize(PROS_FILE* stream) {
-    alignas(alignof(T)) char buf[sizeof(T)];
-    size_t nread = fread((void*)buf, sizeof(T), 1, stream);
-    if (nread < sizeof(T)) {
-      return T();
-    }
-    T* out = (T*)buf;
-    return *out;
-  }
-
-  /** Debug the Cortex if something goes wrong */
-  void debug(void);
-} // namespace debug
-
-#endif /* end of include guard: DEBUG_HPP */
+#endif /* end of include guard: UTIL_H */
