@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< HEAD
         "author": " Ethan <iuyte@gmx.com>",
         "commitkey": "98506f317120991f50a270335eb25a5153852477",
         "date": "  Thu Jul 6 13:27:54 2017 -0400",
@@ -163,6 +164,8 @@
         ]
     },
     {
+=======
+>>>>>>> b52894d4f81f62818501397375f98893a7fd8c38
         "author": " iuyte <iuyte@gmail.com>",
         "commitkey": "afbfe805c5f17e7e3298f075e4a990c03b88ec58",
         "date": "  Thu Jun 29 09:55:51 2017 -0400",
@@ -183,6 +186,10 @@
         "filesAdded": [],
         "filesDeleted": [],
         "filesModified": [
+<<<<<<< HEAD
+=======
+            "709S",
+>>>>>>> b52894d4f81f62818501397375f98893a7fd8c38
             "tools/commit.sh"
         ]
     },

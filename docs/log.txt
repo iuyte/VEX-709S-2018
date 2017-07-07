@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 commit 98506f317120991f50a270335eb25a5153852477
 Author: Ethan <iuyte@gmx.com>
 Date:   Thu Jul 6 13:27:54 2017 -0400
@@ -333,6 +334,8 @@ Date:   Thu Jun 29 23:42:25 2017 -0400
 :100644 100644 dda4e91... 54b1fc4... M	tools/PDFs/src/pid.pdf
 :100644 100644 b7addb4... 4219122... M	tools/PDFs/src/sensors.pdf
 
+=======
+>>>>>>> b52894d4f81f62818501397375f98893a7fd8c38
 commit afbfe805c5f17e7e3298f075e4a990c03b88ec58
 Author: iuyte <iuyte@gmail.com>
 Date:   Thu Jun 29 09:55:51 2017 -0400

@@ -1,4 +1,4 @@
-cd $HOME/VEX-709S-2018/
+cd $VEX
 for q in include/*.h include/*.hpp src/*.cpp
 do
   echo "Copying $q..."

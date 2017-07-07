@@ -14,10 +14,15 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+<<<<<<< HEAD
 #ifndef DEBUG_HPP
 #define DEBUG_HPP
 
 #include "pid.hpp"
+=======
+#pragma once
+#include "lift.hpp"
+>>>>>>> b52894d4f81f62818501397375f98893a7fd8c38
 
 /** Contains debugging funtions, etc */
 namespace debug {

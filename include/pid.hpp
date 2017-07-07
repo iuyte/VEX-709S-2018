@@ -14,10 +14,15 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+<<<<<<< HEAD
 #ifndef PID_HPP
 #define PID_HPP
 
 #include "lift.hpp"
+=======
+#pragma once
+#include "drive.hpp"
+>>>>>>> b52894d4f81f62818501397375f98893a7fd8c38
 
 /** Consists of pid, and all subcomponents, etc */
 namespace pid {
